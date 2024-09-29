@@ -1,14 +1,12 @@
-import './App.css';
-import Main from './pages/main';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import './assets/fonts/fonts.css';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from './assets/styles/theme';
+import CommonRouter from './router/CommonRouter';
 function App() {
   return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
+    <ThemeProvider theme={theme}>
+      <CommonRouter/>
+    </ThemeProvider>
   );
 }
 
