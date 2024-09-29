@@ -7,7 +7,7 @@ const HomeStyles = (theme: ThemeType) => ({
     height: '50vh',
     fontFamily: 'Pretendard',
   }),
-  msg:{
+  msg: {
     textAlign: 'center' as const,
     fontSize: '2rem',
     fontStyle: 'normal',
@@ -24,10 +24,10 @@ const HomeStyles = (theme: ThemeType) => ({
   sec2H2: {
     color: '#000',
     fontWeight: '700',
-    marginTop: '8.87rem'
+    marginTop: '8.87rem',
   },
 });
-export default function Home() {
+const Home = () => {
   const theme = useTheme() as ThemeType;
   const styles = HomeStyles(theme);
   return (
@@ -40,9 +40,12 @@ export default function Home() {
         </h1>
       </section>
       <section css={styles.section}>
-        <h2 css={[styles.msg,styles.sec2H2]}>인기있는 지역의 행사를 확인해보세요!</h2>
-        <HomeFestivalCard city = "서울"/>
+        <h2 css={[styles.msg, styles.sec2H2]}>
+          인기있는 지역의 행사를 확인해보세요!
+        </h2>
+        <HomeFestivalCard city="서울" />
       </section>
     </div>
   );
-}
+};
+export default Home;

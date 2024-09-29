@@ -19,10 +19,11 @@ const style = {
 type CircleImgBoxProps = {
   subject: string;
 };
-export default function CircleImgBox({ subject }: CircleImgBoxProps) {
+const CircleImgBox = ({ subject }: CircleImgBoxProps) => {
   return (
     <div css={style.container}>
       <img css={style.img} src={img1} alt={`${subject}사진`} />
     </div>
   );
-}
+};
+export default CircleImgBox;
