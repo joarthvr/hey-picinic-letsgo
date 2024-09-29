@@ -1,61 +1,61 @@
 @font-face {
-  font-family: 'Pretendard-Thin';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 100;
   font-display: swap;
   src: url('./Pretendard-Thin.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-ExtraLight';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 200;
   font-display: swap;
   src: url('./Pretendard-ExtraLight.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-Light';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
   src: url('./Pretendard-Light.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-Regular';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url('./Pretendard-Regular.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-Medium';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
   src: url('./Pretendard-Medium.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-SemiBold';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
   src: url('./Pretendard-SemiBold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-Bold';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
   src: url('./Pretendard-Bold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-ExtraBold';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 800;
   font-display: swap;
   src: url('./Pretendard-ExtraBold.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'Pretendard-Black';
+  font-family: 'Pretendard';
   font-style: normal;
   font-weight: 900;
   font-display: swap;

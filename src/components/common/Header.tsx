@@ -1,5 +1,5 @@
 import { css, useTheme } from '@emotion/react';
-import { NavLink } from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 import logo from '../../assets/icons/logo.svg';
 import { ThemeType } from '../../assets/styles/theme';
 
@@ -12,9 +12,8 @@ const headerStyles = (theme: ThemeType) => ({
     width: '100%',
     zIndex: 999,
     margin: 0,
-    position: 'absolute' as const,
-    top: 0,
-    left: 0,
+    position: 'absolute',
+    backgroundColor:'transparent',
   }),
   logo: css({
     ...theme.icons.headerLogo,
@@ -23,7 +22,7 @@ const headerStyles = (theme: ThemeType) => ({
   nav: css({
     display: 'flex',
     gap: '2.65rem',
-    ...theme.fonts.header, // 테마의 fonts.header 스타일 적용
+    ...theme.fonts.header,
   }),
   link: css({
     color: '#fff',
@@ -40,7 +39,8 @@ export default function Header() {
 
   return (
     <header css={styles.container}>
-      <img css={styles.logo} src={logo} alt="header-logo" />
+      <Link to = "/"><img css={styles.logo} src={logo} alt="header-logo" />
+      </Link>
       <nav css={styles.nav}>
         <NavLink css={styles.link} to="/festival">
           행사
