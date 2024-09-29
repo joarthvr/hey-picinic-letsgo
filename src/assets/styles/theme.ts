@@ -7,11 +7,11 @@ export const theme = {
   },
   fonts: {
     header: {
-      'font-family': 'Pretendard-Medium',
-      'font-size': '0.9375rem',
-      'font-style': 'normal',
-      'font-weight': '500',
-      'line-height': 'normal',
+      fontFamily: 'Pretendard-Medium',
+      fontSize: '0.9375rem',
+      fontStyle: 'normal',
+      fontWeight: '500',
+      lineHeight: 'normal',
     },
     footer:{
       fontFamily: 'Pretendard-Light',
@@ -24,7 +24,7 @@ export const theme = {
     headerLogo: {
       width: '4.1875rem',
       height: '1.8125rem',
-      'flex-shrink': 0,
+      flexShrink: 0,
       color: '#fff',
       filter: 'brightness(0) invert(1)', // 흰색 필터 추가
     },

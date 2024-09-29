@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export default function Main() {
+export default function Home() {
   const styles = {
     section: css({
       width: '100%',
