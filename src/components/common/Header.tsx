@@ -6,18 +6,21 @@ import { ThemeType } from '../../assets/styles/theme';
 const headerStyles = (theme: ThemeType) => ({
   container: css({
     padding: '1rem 5%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
     zIndex: 999,
     margin: 0,
     position: 'absolute',
     backgroundColor: 'transparent',
+    filter: theme.icons.headerLogo.filter,
+  }),
+  box: css({
+    ...theme.interval.width,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   }),
   logo: css({
     ...theme.icons.headerLogo,
-    filter: theme.icons.headerLogo.filter,
   }),
   nav: css({
     display: 'flex',
@@ -39,23 +42,25 @@ const Header = () => {
 
   return (
     <header css={styles.container}>
-      <Link to="/">
-        <img css={styles.logo} src={logo} alt="header-logo" />
-      </Link>
-      <nav css={styles.nav}>
-        <NavLink css={styles.link} to="/festival">
-          행사
-        </NavLink>
-        <NavLink css={styles.link} to="/accommodation">
-          숙박
-        </NavLink>
-        <NavLink css={styles.link} to="/attractions">
-          관광지
-        </NavLink>
-        <NavLink css={styles.link} to="/mypage">
-          마이페이지
-        </NavLink>
-      </nav>
+      <div css = {styles.box}>
+        <Link to="/">
+          <img css={styles.logo} src={logo} alt="header-logo" />
+        </Link>
+        <nav css={styles.nav}>
+          <NavLink css={styles.link} to="/festival">
+            행사
+          </NavLink>
+          <NavLink css={styles.link} to="/accommodation">
+            숙박
+          </NavLink>
+          <NavLink css={styles.link} to="/attractions">
+            관광지
+          </NavLink>
+          <NavLink css={styles.link} to="/mypage">
+            마이페이지
+          </NavLink>
+        </nav>
+      </div>
     </header>
   );
 };

@@ -3,6 +3,7 @@ import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '../assets/styles/theme';
 import HomeFestivalCard from '../components/home/HomeFestivalCard';
 import dummy from '../models/data.json';
+import HomeInput from '../components/common/HomeInput';
 
 interface City {
   id: number | string;
@@ -35,6 +36,7 @@ const HomeStyles = (theme: ThemeType) => ({
     marginTop: '8.87rem',
   }),
   cards: css({
+    ...theme.interval.width,
     display: 'flex',
     flexWrap: 'wrap',
     gap: '0.94rem',
@@ -42,7 +44,6 @@ const HomeStyles = (theme: ThemeType) => ({
     alignItems: 'center',
     marginTop: '4.06rem',
     paddingBottom: '6.06rem',
-    
   }),
 });
 
@@ -59,6 +60,7 @@ const Home = () => {
           <br />
           검색해보세요.
         </h1>
+        <HomeInput placeHolder={'지역 축제 찾아보기'} />
       </section>
       <section css={styles.section}>
         <h2 css={[styles.msg, styles.sec2H2]}>
