@@ -1,5 +1,5 @@
 import { css, useTheme } from '@emotion/react';
-import { Link,NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/icons/logo.svg';
 import { ThemeType } from '../../assets/styles/theme';
 
@@ -13,7 +13,7 @@ const headerStyles = (theme: ThemeType) => ({
     zIndex: 999,
     margin: 0,
     position: 'absolute',
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
   }),
   logo: css({
     ...theme.icons.headerLogo,
@@ -33,13 +33,14 @@ const headerStyles = (theme: ThemeType) => ({
   }),
 });
 
-export default function Header() {
+const Header = () => {
   const theme = useTheme() as ThemeType;
   const styles = headerStyles(theme);
 
   return (
     <header css={styles.container}>
-      <Link to = "/"><img css={styles.logo} src={logo} alt="header-logo" />
+      <Link to="/">
+        <img css={styles.logo} src={logo} alt="header-logo" />
       </Link>
       <nav css={styles.nav}>
         <NavLink css={styles.link} to="/festival">
@@ -57,4 +58,5 @@ export default function Header() {
       </nav>
     </header>
   );
-}
+};
+export default Header;
