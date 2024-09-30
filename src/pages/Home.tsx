@@ -5,32 +5,11 @@ import { ThemeType } from '../assets/styles/theme';
 import HomeFestivalCard from '../components/home/HomeFestivalCard';
 import dummy from '../models/data.json';
 import HomeInput from '../components/common/HomeInput';
-import { getKeyWordBasedList } from '../api/endpoints';
+import { getKeywordSearch } from '../api/endpoints';
+import { SearchData } from '../api/interfaces';
 interface City {
   id: number | string;
   city: string;
-}
-interface SearchResult {
-  addr1: string;
-  addr2: string;
-  areacode: string;
-  booktour: string;
-  cat1: string;
-  cat2: string;
-  cat3: string;
-  contentid: string;
-  contenttypeid: string;
-  createdtime: string;
-  firstimage: string;
-  firstimage2: string;
-  cpyrhtDivCd: string;
-  mapx: string;
-  mapy: string;
-  mlevel: string;
-  modifiedtime: string;
-  sigungucode: string;
-  tel: string;
-  title: string;
 }
 const HomeStyles = (theme: ThemeType) => ({
   section: css({
@@ -72,13 +51,15 @@ const Home = () => {
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => HomeStyles(theme), [theme]);
   const cities: City[] = dummy.cities;
-  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [tourItems, setTourItems] = useState<SearchData[]>([]);
 
-  
   useEffect(() => {
-    const fetchDataSet = async () => {
+    const fetchTourItems = async () => {
       try {
-        const response = await getKeyWordBasedList({
+        setLoading(true);
+        const items = await getKeywordSearch({
           numOfRows: 10,
           pageNo: 1,
           listYN: 'Y',
@@ -86,14 +67,17 @@ const Home = () => {
           keyword: '강원',
           contentTypeId: 12,
         });
-        console.log(response);
-      } catch {
-        console.log('error');
+        setTourItems(items);
+        console.log(tourItems);
+      } catch (err) {
+        setError('데이터를 불러오는 데 실패했습니다.');
+      } finally {
+        setLoading(false);
       }
     };
-    fetchDataSet();
+    fetchTourItems();
   }, []);
-  console.log(searchResult);
+
   return (
     <div>
       <section css={[styles.section, styles.section1]}>
