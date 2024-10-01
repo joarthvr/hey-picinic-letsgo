@@ -5,6 +5,22 @@ export const theme = {
     TEXT_DARKGRAY: '#393939',
     TEXT_LIGHTGRAY: '#626262',
   },
+  background: {
+    listPageTop: {
+      height: '20.375rem',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
+      backgroundSize: 'cover',
+      fontFamily: 'Pretendard',
+    },
+  },
+  position: {
+    center: {
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  },
   fonts: {
     header: {
       fontFamily: 'Pretendard',
@@ -18,6 +34,27 @@ export const theme = {
       fontSize: '0.75rem',
       fontWeight: '300',
       lineHeight: '1.5',
+    },
+    listPageH1: {
+      color: '#FFF',
+      fontSize: '2.5rem',
+      fontStyle: 'normal',
+      fontWeight: 800,
+      lineHeight: 'normal',
+    },
+    listPageH1Eng: {
+      color: 'rgba(255, 255, 255, 0.52)',
+      fontSize: '1.25rem',
+      fontStyle: 'normal',
+      fontWeight: 500,
+      lineHeight: 'normal',
+    },
+    listPageH2: {
+      color: '#000',
+      fontSize: '1.5rem',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      lineHeight: 'normal',
     },
   },
   icons: {
@@ -65,11 +102,6 @@ export const theme = {
       fontWeight: '600',
       lineHeight: '1rem',
       whiteSpace: 'nowrap',
-    },
-  },
-  img: {
-    listTopImg: {
-      width: '100%',
     },
   },
 };
