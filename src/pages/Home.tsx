@@ -53,10 +53,10 @@ const Home = () => {
   const cities: City[] = dummy.cities;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [tourItems, setTourItems] = useState<SearchData[]>([]);
+  const [searchItems, setSearchItems] = useState<SearchData[]>([]);
 
   useEffect(() => {
-    const fetchTourItems = async () => {
+    const fetchKeywordSearch = async () => {
       try {
         setLoading(true);
         const items = await getKeywordSearch({
@@ -67,16 +67,16 @@ const Home = () => {
           keyword: '강원',
           contentTypeId: 12,
         });
-        setTourItems(items);
-        console.log(tourItems);
-      } catch (err) {
+        setSearchItems(items);
+        console.log(searchItems);
+      } catch {
         setError('데이터를 불러오는 데 실패했습니다.');
       } finally {
         setLoading(false);
       }
     };
-    fetchTourItems();
-  }, []);
+    fetchKeywordSearch();
+  },[]);
 
   return (
     <div>

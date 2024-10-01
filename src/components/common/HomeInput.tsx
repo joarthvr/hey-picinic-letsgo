@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, ChangeEvent } from 'react';
 
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '../../assets/styles/theme';
@@ -50,7 +50,8 @@ const HomeInput = ({ placeHolder }: homeInputProps) => {
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => homeInputStyles(theme), [theme]);
   const [inputValue, setInputValue] = useState('');
-  const handleInputChange = (e) => setInputValue(e.target.value);
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setInputValue(e.target.value);
   console.log(inputValue);
   return (
     <div css={styles.container}>
