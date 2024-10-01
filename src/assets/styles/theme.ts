@@ -67,6 +67,11 @@ export const theme = {
       whiteSpace: 'nowrap',
     },
   },
+  img: {
+    listTopImg: {
+      width: '100%',
+    },
+  },
 };
 
 export type ThemeType = typeof theme;
