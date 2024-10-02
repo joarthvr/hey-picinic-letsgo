@@ -1,30 +1,16 @@
-import { useState, useMemo, ChangeEvent } from 'react';
+import { useState, useMemo, ChangeEvent, useEffect } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '../../assets/styles/theme';
 import cities from '../../models/data.json';
-import SearchConditionBtn from '../home/SearchConditionBtn';
-// import { useLocation } from 'react-router-dom';
-
+import { getKeywordSearch } from '@/api/endpoints';
+import { SearchData } from '@/api/interfaces';
 const inputStyles = (theme: ThemeType) => ({
   container: css({
     color: '#fff',
     fontFamily: 'Pretendard',
     ...theme.interval.width,
-    marginTop: '5.69rem',
-    paddingBottom: '10.75rem',
+    // paddingBottom: '10.75rem',
   }),
-  conditionContainer: {
-    fontSize: '1rem',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    lineHeight: 'normal',
-    display: 'flex',
-    gap: '1.5rem',
-    width: '240px',
-    textAlign: 'center' as const,
-    margin: 'auto',
-    marginBottom: '2.37rem',
-  },
   input: css({
     ...theme.input.homeInput,
     width: '99.546%',
@@ -44,24 +30,51 @@ const inputStyles = (theme: ThemeType) => ({
 interface homeInputProps {
   placeHolder: string;
 }
-const pagemove = ()=>{
-  return ;
-}
+
 const InputForSearch = ({ placeHolder }: homeInputProps) => {
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => inputStyles(theme), [theme]);
   const [inputValue, setInputValue] = useState('');
-  // const [searchType, setSearchType] = useState();
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
+  const [, setLoading] = useState(true);
+  const [, setError] = useState<string | null>(null);
+  const [searchItems, setSearchItems] = useState<SearchData[]>([]);
+
+  //handler
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-  console.log(inputValue);
+    console.log(inputValue);
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // 폼 제출 방지
+      handleSearch();
+    }
+  };
+  const handleSearch = () => {
+    const fetchKeywordSearch = async () => {
+      try {
+        setLoading(true);
+        const items = await getKeywordSearch({
+          numOfRows: 10,
+          pageNo: 1,
+          listYN: 'Y',
+          arrange: 'A',
+          keyword: '강원',
+          contentTypeId: 12,
+        });
+        setSearchItems(items);
+        console.log(searchItems);
+      } catch {
+        setError('데이터를 불러오는 데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchKeywordSearch();
+  };
+
   return (
     <div css={styles.container}>
-      <div css={styles.conditionContainer}>
-        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
-        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
-        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
-      </div>
       <div css={styles.inputContainer}>
         <select css={styles.select}>
           {cities.citiesForSearch.map((item) => {
@@ -69,9 +82,11 @@ const InputForSearch = ({ placeHolder }: homeInputProps) => {
           })}
         </select>
         <input
+          type="text"
           placeholder={placeHolder}
           css={styles.input}
           value={inputValue}
+          onKeyDown={handleKeyDown}
           onChange={handleInputChange}
         />
       </div>
