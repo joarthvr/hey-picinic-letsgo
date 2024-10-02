@@ -1,8 +1,11 @@
 import { useState, useMemo, ChangeEvent } from 'react';
-
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '../../assets/styles/theme';
-const homeInputStyles = (theme: ThemeType) => ({
+import cities from '../../models/data.json';
+import SearchConditionBtn from '../home/SearchConditionBtn';
+// import { useLocation } from 'react-router-dom';
+
+const inputStyles = (theme: ThemeType) => ({
   container: css({
     color: '#fff',
     fontFamily: 'Pretendard',
@@ -10,7 +13,7 @@ const homeInputStyles = (theme: ThemeType) => ({
     marginTop: '5.69rem',
     paddingBottom: '10.75rem',
   }),
-  ul: {
+  conditionContainer: {
     fontSize: '1rem',
     fontStyle: 'normal',
     fontWeight: 600,
@@ -21,11 +24,6 @@ const homeInputStyles = (theme: ThemeType) => ({
     textAlign: 'center' as const,
     margin: 'auto',
     marginBottom: '2.37rem',
-  },
-  li: {
-    margin: 0,
-    whiteSpace: 'nowrap',
-    width: 'auto',
   },
   input: css({
     ...theme.input.homeInput,
@@ -46,23 +44,29 @@ const homeInputStyles = (theme: ThemeType) => ({
 interface homeInputProps {
   placeHolder: string;
 }
-const HomeInput = ({ placeHolder }: homeInputProps) => {
+const pagemove = ()=>{
+  return ;
+}
+const InputForSearch = ({ placeHolder }: homeInputProps) => {
   const theme = useTheme() as ThemeType;
-  const styles = useMemo(() => homeInputStyles(theme), [theme]);
+  const styles = useMemo(() => inputStyles(theme), [theme]);
   const [inputValue, setInputValue] = useState('');
+  // const [searchType, setSearchType] = useState();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
     setInputValue(e.target.value);
   console.log(inputValue);
   return (
     <div css={styles.container}>
-      <ul css={styles.ul}>
-        <li css={styles.li}>행사 검색</li>
-        <li css={styles.li}>숙소 검색</li>
-        <li css={styles.li}>관광지 검색</li>
-      </ul>
+      <div css={styles.conditionContainer}>
+        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
+        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
+        <SearchConditionBtn onClick = {pagemove}title={'행사 검색'}/>
+      </div>
       <div css={styles.inputContainer}>
         <select css={styles.select}>
-          <option>서울</option>
+          {cities.citiesForSearch.map((item) => {
+            return <option key={item.id}>{item.city}</option>;
+          })}
         </select>
         <input
           placeholder={placeHolder}
@@ -75,4 +79,4 @@ const HomeInput = ({ placeHolder }: homeInputProps) => {
   );
 };
 
-export default HomeInput;
+export default InputForSearch;

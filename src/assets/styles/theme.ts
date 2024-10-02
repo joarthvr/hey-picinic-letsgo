@@ -85,7 +85,12 @@ export const theme = {
       padding: '1.125rem 1.3125rem 1.125rem 1.5rem',
       background: 'transparent',
       borderRadius: '0.5rem',
-      border: '1.5px solid #EAEAEA',
+      border: '1.5px solid rgba(234, 234, 234, 0.34)',
+      color: '#fff',
+      fontSize: '0.8125rem',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: '1rem',
     },
   },
   select: {

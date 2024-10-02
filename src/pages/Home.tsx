@@ -4,7 +4,7 @@ import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '../assets/styles/theme';
 import HomeFestivalCard from '../components/home/HomeFestivalCard';
 import dummy from '../models/data.json';
-import HomeInput from '../components/common/HomeInput';
+import InputForSearch from '../components/common/InputForSearch';
 import { getKeywordSearch } from '../api/endpoints';
 import { SearchData } from '../api/interfaces';
 interface City {
@@ -86,7 +86,7 @@ const Home = () => {
           <br />
           검색해보세요.
         </h1>
-        <HomeInput placeHolder={'지역 축제 찾아보기'} />
+        <InputForSearch placeHolder={'지역 축제 찾아보기'} />
       </section>
       <section css={styles.section}>
         <h2 css={[styles.msg, styles.sec2H2]}>
