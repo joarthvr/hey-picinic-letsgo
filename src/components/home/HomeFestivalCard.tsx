@@ -28,7 +28,7 @@ const cardStyle = {
   }),
 };
 
-const HomeFestivalCard = ({ city }: HomeFestivalCardProps) => {
+export const HomeFestivalCard = ({ city }: HomeFestivalCardProps) => {
   return (
     <div css={cardStyle.container}>
       <CircleImgBox subject={city} />
@@ -36,4 +36,4 @@ const HomeFestivalCard = ({ city }: HomeFestivalCardProps) => {
     </div>
   );
 };
-export default HomeFestivalCard;
+// export default HomeFestivalCard;
