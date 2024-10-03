@@ -22,7 +22,7 @@
 
 import { createBrowserRouter } from 'react-router-dom';
 import MainLayout from '@/layout/MainLayout';
-import Home from '@/pages/Home';
+import HomePage from '@/pages/HomePage';
 import ListPage from '@/pages/ListBySearch';
 import MyPage from '@/pages/MyPage';
 import Detail from '@/pages/Detail';
@@ -36,10 +36,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomePage />,
       },
       {
-        path: "festival",
+        path: "list",
         element: <ListPage />,
       },
       {

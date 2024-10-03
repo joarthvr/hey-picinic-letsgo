@@ -6,6 +6,18 @@ interface SearchConditionBtnProps {
   isSelected: boolean;
 }
 
+
+export const SearchConditionBtn = ({
+  title,
+  onClick,
+  isSelected,
+}: SearchConditionBtnProps) => {
+  return (
+    <button css={btnStyle(isSelected)} onClick={onClick}>
+      {title}
+    </button>
+  );
+};
 const btnStyle = (isSelected: boolean) => css({
   margin: 0,
   whiteSpace: 'nowrap',
@@ -31,17 +43,5 @@ const btnStyle = (isSelected: boolean) => css({
     outline: 'none', // 클릭 시 포커스 스타일 제거
   },
 });
-
-export const SearchConditionBtn = ({
-  title,
-  onClick,
-  isSelected,
-}: SearchConditionBtnProps) => {
-  return (
-    <button css={btnStyle(isSelected)} onClick={onClick}>
-      {title}
-    </button>
-  );
-};
 
 export default SearchConditionBtn;
