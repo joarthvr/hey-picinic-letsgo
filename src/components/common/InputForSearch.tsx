@@ -3,13 +3,12 @@ import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import data from '@/models/data.json';
 import { getKeywordSearch } from '@/api/endpoints';
-// import { SearchData } from '@/api/interfaces';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface homeInputProps {
-  placeHolder: string;
+  placeHolder?: string;
   condition: number;
-  locationInfo: string;
+  locationInfo?: string;
 }
 const InputForSearch = ({
   placeHolder,

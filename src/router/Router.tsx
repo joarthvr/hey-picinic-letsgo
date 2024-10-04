@@ -17,17 +17,17 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'list',
+        path: 'list/:condition',
         element: <ListPage />,
       },
-      {
-        path: 'accommodation',
-        element: <ListPage />,
-      },
-      {
-        path: 'attractions',
-        element: <ListPage />,
-      },
+      // {
+      //   path: 'accommodation',
+      //   element: <ListPage />,
+      // },
+      // {
+      //   path: 'attractions',
+      //   element: <ListPage />,
+      // },
       {
         path: 'mypage',
         element: <MyPage />,

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import { HomeFestivalCard, SearchConditionBtn } from '@/components/home';
@@ -20,13 +19,14 @@ const HomePage = () => {
   const styles = useMemo(() => HomeStyles(theme), [theme]);
   const cities: City[] = data.cities;
   const conditions: Condition[] = data.conditions;
-  const [selectedCondition, setSelectedCondition] = useState<Condition>(conditions[0]);
+  const [selectedCondition, setSelectedCondition] = useState<Condition>(
+    conditions[0]
+  );
 
-  
   const handleConditionChange = (newCondition: Condition) => {
     setSelectedCondition(newCondition);
   };
-  
+
   useEffect(() => {
     console.log(selectedCondition);
   }, [selectedCondition]);
@@ -39,16 +39,20 @@ const HomePage = () => {
           검색해보세요.
         </h1>
         <div css={styles.conditionContainer}>
-        {data.conditions.map((item) => (
-          <SearchConditionBtn
-          key={item.id}
-          isSelected={item.id === selectedCondition.id}
-          onClick={()=>handleConditionChange(item)}
-          title={item.condition}
-          />
-        ))}
+          {data.conditions.map((item) => (
+            <SearchConditionBtn
+              key={item.id}
+              isSelected={item.id === selectedCondition.id}
+              onClick={() => handleConditionChange(item)}
+              title={item.condition}
+            />
+          ))}
         </div>
-        <InputForSearch placeHolder={'지역 축제 찾아보기'} condition={selectedCondition.id} locationInfo={selectedCondition.locationInfo}/>
+        <InputForSearch
+          placeHolder={'지역 축제 찾아보기'}
+          condition={selectedCondition.id}
+          locationInfo={selectedCondition.locationInfo}
+        />
       </section>
       <section css={styles.section}>
         <h2 css={[styles.msg, styles.sec2H2]}>
