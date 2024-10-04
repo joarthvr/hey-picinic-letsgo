@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'list/:condition',
+        path: 'list',
         element: <ListPage />,
       },
       // {
