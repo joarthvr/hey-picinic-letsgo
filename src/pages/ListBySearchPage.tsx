@@ -24,11 +24,14 @@ const contentMap: Record<number, ContentInfo> = {
 
 const ListBySearch = () => {
   const theme = useTheme() as ThemeType;
-  const location = useLocation(); 
+  const location = useLocation();
   const locationInfo = location.state.locationInfo;
   const condition = location.state.condition;
   console.log(locationInfo);
-  const styles = useMemo(() => festivalListStyle(theme, locationInfo), [theme, locationInfo]);
+  const styles = useMemo(
+    () => festivalListStyle(theme, locationInfo),
+    [theme, locationInfo]
+  );
   return (
     <>
       <section css={styles.section1}>
@@ -39,15 +42,16 @@ const ListBySearch = () => {
       </section>
       <section css={styles.section2}>
         <h2 css={styles.h2}>
-          <span>{contentMap[condition].title}</span>의 <span></span>에 대한 검색 결과입니다.
+          <span css={styles.searchKeyword}>{contentMap[condition].title}</span>
+          의<span css={styles.searchKeyword}>'{}'</span>에 대한 검색 결과입니다.
         </h2>
-        {/* <InputForSearch condition = {'dddd'} placeHolder={'리스트페이지'}/> */}
+        {/* <InputForSearch placeHolder={'리스트페이지'}/> */}
       </section>
     </>
   );
 };
 
-const festivalListStyle = (theme: ThemeType, locationInfo:LocatType) => ({
+const festivalListStyle = (theme: ThemeType, locationInfo: LocatType) => ({
   section1: css({
     backgroundImage: `url(${backgroundImages[locationInfo]})`,
     position: 'relative',
@@ -55,7 +59,7 @@ const festivalListStyle = (theme: ThemeType, locationInfo:LocatType) => ({
   }),
   sec1TextBox: css({
     position: 'absolute',
-    display:'flex',
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -74,7 +78,10 @@ const festivalListStyle = (theme: ThemeType, locationInfo:LocatType) => ({
   }),
   h2: css({
     ...theme.fonts.listPageH2,
-    marginTop:'7.56rem',
+    marginTop: '7.56rem',
+  }),
+  searchKeyword: css({
+    fontWeight: 600,
   }),
 });
 export default ListBySearch;

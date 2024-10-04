@@ -1,18 +1,23 @@
-import { useState, useMemo, ChangeEvent } from 'react';
+import { useState, useMemo, ChangeEvent, useEffect } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import data from '@/models/data.json';
 import { getKeywordSearch } from '@/api/endpoints';
 // import { SearchData } from '@/api/interfaces';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface homeInputProps {
   placeHolder: string;
   condition: number;
   locationInfo: string;
 }
-const InputForSearch = ({ placeHolder, condition, locationInfo }: homeInputProps) => {
+const InputForSearch = ({
+  placeHolder,
+  condition,
+  locationInfo,
+}: homeInputProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => inputStyles(theme), [theme]);
   const [inputValue, setInputValue] = useState('');
@@ -35,36 +40,50 @@ const InputForSearch = ({ placeHolder, condition, locationInfo }: homeInputProps
       handleSearch();
     }
   };
+  // URL에서 검색 파라미터 읽기
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const keyword = searchParams.get('keyword');
+    const city = searchParams.get('city');
+
+    if (keyword) setInputValue(keyword);
+    if (city) setSelectedCity(city);
+  }, [location.search]);
+
   const handleSearch = () => {
-    const fetchKeywordSearch = async () => {
-      try {
-        setLoading(true);
-        const combinedKeyword = `${selectedCity}${inputValue}`.trim();
-        const items = await getKeywordSearch({
-          numOfRows: 10,
-          pageNo: 1,
-          listYN: 'Y',
-          arrange: 'A',
-          keyword: `${combinedKeyword}`,
-          contentTypeId: condition,
-          
-        });
-        console.log(combinedKeyword);
-        console.log(items);
-      } catch {
-        setError('데이터를 불러오는 데 실패했습니다.');
-      } finally {
-        setLoading(false);
+    const combinedKeyword = `${selectedCity}${inputValue}`.trim();
+
+    // URL 업데이트
+    navigate(
+      `/list?keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
+      {
+        state: {
+          condition,
+          locationInfo,
+        },
       }
-    };
-    // 검색 결과 페이지로 이동
-    navigate('/list', { 
-      state: { 
-        condition,
-        locationInfo,
-      } 
-    });
-    fetchKeywordSearch();
+    );
+
+    fetchKeywordSearch(combinedKeyword);
+  };
+
+  const fetchKeywordSearch = async (keyword: string) => {
+    try {
+      setLoading(true);
+      const items = await getKeywordSearch({
+        numOfRows: 10,
+        pageNo: 1,
+        listYN: 'Y',
+        arrange: 'A',
+        keyword: keyword,
+        contentTypeId: condition,
+      });
+      console.log(items);
+    } catch {
+      setError('데이터를 불러오는 데 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div css={styles.container}>
