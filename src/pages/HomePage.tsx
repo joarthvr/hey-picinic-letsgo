@@ -13,6 +13,7 @@ interface City {
 interface Condition {
   id: number;
   condition: string;
+  locationInfo: string;
 }
 const HomePage = () => {
   const theme = useTheme() as ThemeType;
@@ -47,7 +48,7 @@ const HomePage = () => {
           />
         ))}
         </div>
-        <InputForSearch placeHolder={'지역 축제 찾아보기'} condition={selectedCondition.id} />
+        <InputForSearch placeHolder={'지역 축제 찾아보기'} condition={selectedCondition.id} locationInfo={selectedCondition.locationInfo}/>
       </section>
       <section css={styles.section}>
         <h2 css={[styles.msg, styles.sec2H2]}>

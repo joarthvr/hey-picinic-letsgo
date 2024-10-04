@@ -1,5 +1,5 @@
-import { apiRequester } from './index';
-import { KeywordSearchParams, SearchData, APIResponse } from './interfaces';
+import { apiRequester } from '@/api';
+import { KeywordSearchParams, SearchData, APIResponse } from '@/api/interfaces';
 
 export const getKeywordSearch = async (
   params: Omit<

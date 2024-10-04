@@ -9,15 +9,15 @@ import { useNavigate } from 'react-router-dom';
 interface homeInputProps {
   placeHolder: string;
   condition: number;
+  locationInfo: string;
 }
-const InputForSearch = ({ placeHolder, condition }: homeInputProps) => {
+const InputForSearch = ({ placeHolder, condition, locationInfo }: homeInputProps) => {
   const navigate = useNavigate();
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => inputStyles(theme), [theme]);
   const [inputValue, setInputValue] = useState('');
   const [, setLoading] = useState(true);
   const [, setError] = useState<string | null>(null);
-
   const [selectedCity, setSelectedCity] = useState(
     data.citiesForSearch[0].city
   );
@@ -59,11 +59,10 @@ const InputForSearch = ({ placeHolder, condition }: homeInputProps) => {
     };
     // 검색 결과 페이지로 이동
     navigate('/list', { 
-      // state: { 
-      //   items, 
-      //   keyword: comb, 
-      //   condition 
-      // } 
+      state: { 
+        condition,
+        locationInfo,
+      } 
     });
     fetchKeywordSearch();
   };

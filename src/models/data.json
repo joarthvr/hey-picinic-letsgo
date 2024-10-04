@@ -27,8 +27,8 @@
     { "id": 39, "city": "제주도" }
   ],
   "conditions": [
-    { "id": 15, "condition": "행사 검색" },
-    { "id": 32, "condition": "숙박 검색" },
-    { "id": 12, "condition": "관광지 검색" }
+    { "id": 15, "condition": "행사 검색", "locationInfo": "Festival" },
+    { "id": 32, "condition": "숙박 검색", "locationInfo": "Lodgement" },
+    { "id": 12, "condition": "관광지 검색", "locationInfo": "Attraction" }
   ]
 }
