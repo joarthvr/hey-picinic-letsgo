@@ -30,7 +30,7 @@ const Header = () => {
       locationInfo: 'Attraction',
       condition: 12,
     },
-    { to: '/mypage', title: '마이페이지' },
+    { to: '/mypage', title: '마이페이지', condtion:0 },
   ];
   
   return (
@@ -42,7 +42,7 @@ const Header = () => {
         <nav css={styles.nav}>
           {navItems.map((item) => (
             <Link
-              key={item.to}
+              key={item.condition}
               css={styles.link}
               to={item.to}
               state={{

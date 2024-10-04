@@ -3,22 +3,26 @@ import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import data from '@/models/data.json';
 import { getKeywordSearch } from '@/api/endpoints';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 
-interface homeInputProps {
+interface InputProps {
   placeHolder?: string;
-  condition: number;
+  condition?: number;
   locationInfo?: string;
+  type?: string;
 }
 const InputForSearch = ({
   placeHolder,
   condition,
   locationInfo,
-}: homeInputProps) => {
+  type = 'list',
+}: InputProps) => {
+  const [searchParams] = useSearchParams()
+  console.log(searchParams.get('list'))
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme() as ThemeType;
-  const styles = useMemo(() => inputStyles(theme), [theme]);
+  const styles = useMemo(() => inputStyles(theme, type), [theme, type]);
   const [inputValue, setInputValue] = useState('');
   const [, setLoading] = useState(true);
   const [, setError] = useState<string | null>(null);
@@ -44,14 +48,14 @@ const InputForSearch = ({
     const searchParams = new URLSearchParams(location.search);
     const keyword = searchParams.get('keyword');
     const city = searchParams.get('city');
-
+    
     if (keyword) setInputValue(keyword);
     if (city) setSelectedCity(city);
   }, [location.search]);
-
+  
   const handleSearch = () => {
     const combinedKeyword = `${selectedCity}${inputValue}`.trim();
-
+    
     // URL 업데이트
     navigate(
       `/list?keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
@@ -62,10 +66,10 @@ const InputForSearch = ({
         },
       }
     );
-
+    
     fetchKeywordSearch(combinedKeyword);
   };
-
+  
   const fetchKeywordSearch = async (keyword: string) => {
     try {
       setLoading(true);
@@ -75,7 +79,7 @@ const InputForSearch = ({
         listYN: 'Y',
         arrange: 'A',
         keyword: keyword,
-        contentTypeId: condition,
+        contentTypeId: condition ?? 15, 
       });
       console.log(items);
     } catch {
@@ -91,7 +95,7 @@ const InputForSearch = ({
           css={styles.select}
           value={selectedCity}
           onChange={handleSelectChange}
-        >
+          >
           {data.citiesForSearch.map((item) => {
             return <option key={item.id}>{item.city}</option>;
           })}
@@ -108,7 +112,7 @@ const InputForSearch = ({
     </div>
   );
 };
-const inputStyles = (theme: ThemeType) => ({
+const inputStyles = (theme: ThemeType, type: string) => ({
   container: css({
     color: '#fff',
     fontFamily: 'Pretendard',
@@ -116,12 +120,13 @@ const inputStyles = (theme: ThemeType) => ({
     // paddingBottom: '10.75rem',
   }),
   input: css({
-    ...theme.input.homeInput,
+    ...(type !== 'home' ? theme.input.listInput : theme.input.homeInput),
+
     width: '99.546%',
   }),
   select: css({
     width: '14.85%',
-    ...theme.select.homeSelect,
+    ...(type!== 'home' ? theme.select.listSelect  : theme.select.homeSelect)
   }),
   inputContainer: css({
     display: 'flex',

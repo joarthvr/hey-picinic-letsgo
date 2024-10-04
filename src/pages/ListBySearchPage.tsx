@@ -4,8 +4,8 @@ import Attraction from '@/assets/images/attraction.png';
 import { css, useTheme } from '@emotion/react';
 import { useMemo } from 'react';
 import { ThemeType } from '@/assets/styles/theme';
-import { useLocation } from 'react-router-dom';
-// import InputForSearch  from '@/components/common/InputForSearch'
+import { useLocation, useSearchParams } from 'react-router-dom';
+import InputForSearch  from '@/components/common/InputForSearch'
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
   Festival,
@@ -23,10 +23,14 @@ const contentMap: Record<number, ContentInfo> = {
 };
 
 const ListBySearch = () => {
+  const [searchParams] = useSearchParams();
+  const searchParamsCity = searchParams.get('city');
+  const searchParamsKeyword = searchParams.get('keyword');
   const theme = useTheme() as ThemeType;
   const location = useLocation();
   const locationInfo = location.state.locationInfo;
   const condition = location.state.condition;
+  console.log(location)
   console.log(locationInfo);
   const styles = useMemo(
     () => festivalListStyle(theme, locationInfo),
@@ -42,10 +46,10 @@ const ListBySearch = () => {
       </section>
       <section css={styles.section2}>
         <h2 css={styles.h2}>
-          <span css={styles.searchKeyword}>{contentMap[condition].title}</span>
-          의<span css={styles.searchKeyword}>'{}'</span>에 대한 검색 결과입니다.
+          <span css={styles.searchKeyword}>{searchParamsCity}</span>
+          의 <span css={styles.searchKeyword}>'{[searchParamsCity,searchParamsKeyword]}'</span>에 대한 검색 결과입니다.
         </h2>
-        {/* <InputForSearch placeHolder={'리스트페이지'}/> */}
+        <InputForSearch type ={locationInfo} locationInfo={locationInfo} condition={condition} placeHolder={`${searchParamsCity} ${searchParamsKeyword}`}/>
       </section>
     </>
   );
@@ -79,6 +83,7 @@ const festivalListStyle = (theme: ThemeType, locationInfo: LocatType) => ({
   h2: css({
     ...theme.fonts.listPageH2,
     marginTop: '7.56rem',
+    marginBottom: '2.75rem',
   }),
   searchKeyword: css({
     fontWeight: 600,

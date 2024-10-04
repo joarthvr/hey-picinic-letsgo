@@ -49,9 +49,10 @@ const HomePage = () => {
           ))}
         </div>
         <InputForSearch
-          placeHolder={'지역 축제 찾아보기'}
+          placeHolder={`지역 ${selectedCondition.condition}`}
           condition={selectedCondition.id}
           locationInfo={selectedCondition.locationInfo}
+          type='home'
         />
       </section>
       <section css={styles.section}>

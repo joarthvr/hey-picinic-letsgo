@@ -92,6 +92,17 @@ export const theme = {
       fontWeight: 600,
       lineHeight: '1rem',
     },
+    listInput:{
+      height: '3.125rem;',
+      padding: '1.125rem 1.3125rem 1.125rem 1.5rem',
+      background: 'transparent',
+      borderRadius: '1rem',
+      border: '1px solid rgba(0, 0, 0, 0.14)',
+      color: '#000',
+      fontSize: '0.8125rem',
+      fontWeight: 400,
+      lineHeight: 'normal',
+    }
   },
   select: {
     homeSelect: {
@@ -102,6 +113,20 @@ export const theme = {
       background: 'transparent',
       padding: '1.125rem 1.3125rem 1.125rem 1.5rem',
       color: 'rgba(255, 255, 255, 0.74)',
+      fontSize: '0.8125rem',
+      fontStyle: 'normal',
+      fontWeight: '600',
+      lineHeight: '1rem',
+      whiteSpace: 'nowrap',
+    },
+    listSelect: {
+      height: '3.0626rem',
+      flexShrink: 0,
+      borderRadius: '1rem',
+      border: '1px solid rgba(136, 136, 136, 0.34)',
+      background: 'transparent',
+      padding: '0.725rem 0.4125rem 0.625rem 0.5rem',
+      color: 'rgba(0, 0, 0, 0.74)',
       fontSize: '0.8125rem',
       fontStyle: 'normal',
       fontWeight: '600',
