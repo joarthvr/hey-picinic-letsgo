@@ -117,7 +117,7 @@ const inputStyles = (theme: ThemeType, type: string) => ({
     color: '#fff',
     fontFamily: 'Pretendard',
     ...theme.interval.width,
-    // paddingBottom: '10.75rem',
+    marginBottom: type !== 'home' ? '5.75rem': 0,
   }),
   input: css({
     ...(type !== 'home' ? theme.input.listInput : theme.input.homeInput),
@@ -132,7 +132,7 @@ const inputStyles = (theme: ThemeType, type: string) => ({
     display: 'flex',
     margin: 'auto',
     width: '100%',
-    padding: '0 3rem 0 1.5rem',
+    padding: type !== 'home' ? 0 : '0 3rem 0 1.5rem',
     gap: '0.3rem',
   }),
 });

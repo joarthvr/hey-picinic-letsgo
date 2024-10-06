@@ -5,7 +5,8 @@ import { css, useTheme } from '@emotion/react';
 import { useMemo } from 'react';
 import { ThemeType } from '@/assets/styles/theme';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import InputForSearch  from '@/components/common/InputForSearch'
+import InputForSearch from '@/components/common/InputForSearch';
+import ListItem from '@/components/listItem';
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
   Festival,
@@ -30,10 +31,10 @@ const ListBySearch = () => {
   const location = useLocation();
   const locationInfo = location.state.locationInfo;
   const condition = location.state.condition;
-  console.log(location)
+  console.log(location);
   console.log(locationInfo);
   const styles = useMemo(
-    () => festivalListStyle(theme, locationInfo),
+    () => ListPageStyles(theme, locationInfo),
     [theme, locationInfo]
   );
   return (
@@ -46,16 +47,25 @@ const ListBySearch = () => {
       </section>
       <section css={styles.section2}>
         <h2 css={styles.h2}>
-          <span css={styles.searchKeyword}>{searchParamsCity}</span>
-          의 <span css={styles.searchKeyword}>'{[searchParamsCity,searchParamsKeyword]}'</span>에 대한 검색 결과입니다.
+          <span css={styles.searchKeyword}>{searchParamsCity}</span>의{' '}
+          <span css={styles.searchKeyword}>
+            '{[searchParamsCity, searchParamsKeyword]}'
+          </span>
+          에 대한 검색 결과입니다.
         </h2>
-        <InputForSearch type ={locationInfo} locationInfo={locationInfo} condition={condition} placeHolder={`${searchParamsCity} ${searchParamsKeyword}`}/>
+        <InputForSearch
+          type={locationInfo}
+          locationInfo={locationInfo}
+          condition={condition}
+          placeHolder={`${searchParamsCity} ${searchParamsKeyword}`}
+        />
+        <ListItem />
       </section>
     </>
   );
 };
 
-const festivalListStyle = (theme: ThemeType, locationInfo: LocatType) => ({
+const ListPageStyles = (theme: ThemeType, locationInfo: LocatType) => ({
   section1: css({
     backgroundImage: `url(${backgroundImages[locationInfo]})`,
     position: 'relative',
@@ -78,7 +88,7 @@ const festivalListStyle = (theme: ThemeType, locationInfo: LocatType) => ({
   section2: css({
     fontFamily: 'Pretendard',
     ...theme.interval.width,
-    height: '50vh',
+    minHeight: '50rem',
   }),
   h2: css({
     ...theme.fonts.listPageH2,

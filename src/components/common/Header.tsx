@@ -1,6 +1,6 @@
 import { css, useTheme } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import logo from '@/assets/icons/logo.svg';
+import Logo from '@/assets/icons/logo.svg?react';
 import { ThemeType } from '@/assets/styles/theme';
 // interface Condition {
 //   id: number;
@@ -30,14 +30,14 @@ const Header = () => {
       locationInfo: 'Attraction',
       condition: 12,
     },
-    { to: '/mypage', title: '마이페이지', condtion:0 },
+    { to: '/mypage', title: '마이페이지', condtion: 0 },
   ];
-  
+
   return (
     <header css={styles.container}>
       <div css={styles.box}>
         <Link to="/">
-          <img css={styles.logo} src={logo} alt="header-logo" />
+          <Logo css={styles.logo} />
         </Link>
         <nav css={styles.nav}>
           {navItems.map((item) => (
@@ -67,7 +67,7 @@ const headerStyles = (theme: ThemeType) => ({
     margin: 0,
     position: 'absolute',
     backgroundColor: 'transparent',
-    filter: theme.icons.headerLogo.filter,
+    // filter: theme.icons.headerLogo.filter,
   }),
   box: css({
     ...theme.interval.width,

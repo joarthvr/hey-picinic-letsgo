@@ -56,14 +56,34 @@ export const theme = {
       fontWeight: '400',
       lineHeight: 'normal',
     },
+    h3: {
+      color: '#000',
+      fontSize: '1.25rem',
+      fontStyle: 'normal',
+      fontWeight: 700,
+      lineHeight: 'normal',
+    },
+    gray: {
+      color: 'rgba(0, 0, 0, 0.50)',
+      fontSize: '0.875rem',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+    },
+    description: {
+      fontSize: '0.75rem',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+    },
   },
   icons: {
     headerLogo: {
       width: '4.1875rem',
       height: '1.8125rem',
       flexShrink: 0,
-      color: '#fff',
       filter: 'brightness(0) invert(1)', // 흰색 필터 추가
+      fill: '#fff',
     },
     footerInsta: {},
   },
@@ -92,7 +112,7 @@ export const theme = {
       fontWeight: 600,
       lineHeight: '1rem',
     },
-    listInput:{
+    listInput: {
       height: '3.125rem;',
       padding: '1.125rem 1.3125rem 1.125rem 1.5rem',
       background: 'transparent',
@@ -102,7 +122,7 @@ export const theme = {
       fontSize: '0.8125rem',
       fontWeight: 400,
       lineHeight: 'normal',
-    }
+    },
   },
   select: {
     homeSelect: {
