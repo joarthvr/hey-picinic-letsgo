@@ -61,16 +61,16 @@ const Header = () => {
 
 const headerStyles = (theme: ThemeType) => ({
   container: css({
-    padding: '1rem 5%',
+    padding: '1rem 3%',
     width: '100%',
     zIndex: 999,
     margin: 0,
     position: 'absolute',
     backgroundColor: 'transparent',
-    // filter: theme.icons.headerLogo.filter,
   }),
   box: css({
     ...theme.interval.width,
+    padding:0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',

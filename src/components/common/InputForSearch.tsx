@@ -116,7 +116,6 @@ const inputStyles = (theme: ThemeType, type: string) => ({
   container: css({
     color: '#fff',
     fontFamily: 'Pretendard',
-    ...theme.interval.width,
     marginBottom: type !== 'home' ? '5.75rem': 0,
   }),
   input: css({

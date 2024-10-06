@@ -55,7 +55,7 @@ const ListItemStyles = (theme: ThemeType) => ({
     gap: '0.5rem',
     float: 'right',
     alignItems: 'center',
-    justifyContent:'right',
+    justifyContent: 'right',
   }),
   infoAndBtncontainer: css({
     whiteSpace: 'nowrap',

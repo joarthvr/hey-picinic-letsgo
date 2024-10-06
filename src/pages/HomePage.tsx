@@ -48,12 +48,15 @@ const HomePage = () => {
             />
           ))}
         </div>
+        <div css={styles.width}>
+
         <InputForSearch
           placeHolder={`지역 ${selectedCondition.condition}`}
           condition={selectedCondition.id}
           locationInfo={selectedCondition.locationInfo}
           type='home'
-        />
+          />
+          </div>
       </section>
       <section css={styles.section}>
         <h2 css={[styles.msg, styles.sec2H2]}>
@@ -115,6 +118,10 @@ const HomeStyles = (theme: ThemeType) => ({
     textAlign: 'center' as const,
     margin: '5.69rem auto 2.37rem auto',
   }),
+  width:{
+    ...theme.interval.width,
+    padding:0,
+  }
 });
 
 export default HomePage;

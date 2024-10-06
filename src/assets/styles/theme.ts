@@ -95,7 +95,8 @@ export const theme = {
       paddingTop: '6.13rem',
     },
     width: {
-      maxWidth: '1200px',
+      maxWidth: '1220px',
+      padding: '0 1rem 0 1rem',
       margin: 'auto',
     },
   },
