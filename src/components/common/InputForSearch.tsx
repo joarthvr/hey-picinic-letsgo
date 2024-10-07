@@ -2,7 +2,7 @@ import { useState, useMemo, ChangeEvent, useEffect } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import data from '@/models/data.json';
-import { getKeywordSearch } from '@/api/endpoints';
+// import { getKeywordSearch } from '@/api/api';
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 
 interface InputProps {
@@ -17,15 +17,15 @@ const InputForSearch = ({
   locationInfo,
   type = 'list',
 }: InputProps) => {
-  const [searchParams] = useSearchParams()
-  console.log(searchParams.get('list'))
+  const [searchParams] = useSearchParams();
+  console.log(searchParams.get('list'));
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => inputStyles(theme, type), [theme, type]);
   const [inputValue, setInputValue] = useState('');
-  const [, setLoading] = useState(true);
-  const [, setError] = useState<string | null>(null);
+  // const [, setLoading] = useState(true);
+  // const [, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState(
     data.citiesForSearch[0].city
   );
@@ -48,14 +48,14 @@ const InputForSearch = ({
     const searchParams = new URLSearchParams(location.search);
     const keyword = searchParams.get('keyword');
     const city = searchParams.get('city');
-    
+
     if (keyword) setInputValue(keyword);
     if (city) setSelectedCity(city);
   }, [location.search]);
-  
+
   const handleSearch = () => {
     const combinedKeyword = `${selectedCity}${inputValue}`.trim();
-    
+
     // URL 업데이트
     navigate(
       `/list?keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
@@ -66,28 +66,28 @@ const InputForSearch = ({
         },
       }
     );
-    
-    fetchKeywordSearch(combinedKeyword);
+
+    // fetchKeywordSearch(combinedKeyword);
   };
-  
-  const fetchKeywordSearch = async (keyword: string) => {
-    try {
-      setLoading(true);
-      const items = await getKeywordSearch({
-        numOfRows: 10,
-        pageNo: 1,
-        listYN: 'Y',
-        arrange: 'A',
-        keyword: keyword,
-        contentTypeId: condition ?? 15, 
-      });
-      console.log(items);
-    } catch {
-      setError('데이터를 불러오는 데 실패했습니다.');
-    } finally {
-      setLoading(false);
-    }
-  };
+
+  // const fetchKeywordSearch = async (keyword: string) => {
+  //   try {
+  //     setLoading(true);
+  //     const items = await getKeywordSearch({
+  //       numOfRows: 10,
+  //       pageNo: 1,
+  //       listYN: 'Y',
+  //       arrange: 'A',
+  //       keyword: keyword,
+  //       contentTypeId: condition ?? 15,
+  //     });
+  //     console.log(items);
+  //   } catch {
+  //     setError('데이터를 불러오는 데 실패했습니다.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   return (
     <div css={styles.container}>
       <div css={styles.inputContainer}>
@@ -95,7 +95,7 @@ const InputForSearch = ({
           css={styles.select}
           value={selectedCity}
           onChange={handleSelectChange}
-          >
+        >
           {data.citiesForSearch.map((item) => {
             return <option key={item.id}>{item.city}</option>;
           })}
@@ -116,7 +116,7 @@ const inputStyles = (theme: ThemeType, type: string) => ({
   container: css({
     color: '#fff',
     fontFamily: 'Pretendard',
-    marginBottom: type !== 'home' ? '5.75rem': 0,
+    marginBottom: type !== 'home' ? '5.75rem' : 0,
   }),
   input: css({
     ...(type !== 'home' ? theme.input.listInput : theme.input.homeInput),
@@ -125,7 +125,7 @@ const inputStyles = (theme: ThemeType, type: string) => ({
   }),
   select: css({
     width: '14.85%',
-    ...(type!== 'home' ? theme.select.listSelect  : theme.select.homeSelect)
+    ...(type !== 'home' ? theme.select.listSelect : theme.select.homeSelect),
   }),
   inputContainer: css({
     display: 'flex',

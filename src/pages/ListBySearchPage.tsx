@@ -7,6 +7,9 @@ import { ThemeType } from '@/assets/styles/theme';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import InputForSearch from '@/components/common/InputForSearch';
 import ListItem from '@/components/listItem';
+// import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
+import { useSearchData } from '@/api';
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
   Festival,
@@ -22,8 +25,8 @@ const contentMap: Record<number, ContentInfo> = {
   32: { title: '숙박', image: Lodgement },
   12: { title: '관광지', image: Attraction },
 };
-
 const ListBySearch = () => {
+  // const [] = useSearchData
   const [searchParams] = useSearchParams();
   const searchParamsCity = searchParams.get('city');
   const searchParamsKeyword = searchParams.get('keyword');
@@ -37,6 +40,12 @@ const ListBySearch = () => {
     () => ListPageStyles(theme, locationInfo),
     [theme, locationInfo]
   );
+  // const fetchSearchData = async (): Promise<Todo[]> => {
+  //   const { data } = await axios.get<Todo[]>();
+  //   return data;
+  // };
+  // const {data} = useQuery('get-searchData', fetchSearchData);
+
   return (
     <>
       <section css={styles.section1}>

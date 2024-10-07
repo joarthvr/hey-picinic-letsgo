@@ -5,7 +5,6 @@ import ListPage from '@/pages/ListBySearchPage';
 import MyPage from '@/pages/MyPage';
 import Detail from '@/pages/Detail';
 import ErrorPage from '@/pages/ErrorPage';
-
 const router = createBrowserRouter([
   {
     path: '/',
