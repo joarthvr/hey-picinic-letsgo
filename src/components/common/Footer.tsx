@@ -2,8 +2,25 @@ import { css, useTheme } from '@emotion/react';
 import { FaGithub } from 'react-icons/fa';
 import { FaInstagram } from 'react-icons/fa6';
 import { MdOutlineEmail } from 'react-icons/md';
-import { ThemeType } from '../../assets/styles/theme';
+import { ThemeType } from '@/assets/styles/theme';
 
+const Footer = () => {
+  const theme = useTheme() as ThemeType;
+  const styles = footerStyles(theme);
+  return (
+    <footer css={styles.container}>
+      <div css={styles.snsIcons}>
+        <FaGithub css={styles.github} />
+        <FaInstagram css={styles.insta} />
+        <MdOutlineEmail css={styles.mail} />
+      </div>
+      <p css={styles.copyRight}>
+        © 2024 프로그래머스 데브코스 8조 2팀 All pictures cannot be copied
+        without permission.
+      </p>
+    </footer>
+  );
+};
 const footerStyles = (theme: ThemeType) => ({
   container: css({
     display: 'flex',
@@ -39,21 +56,4 @@ const footerStyles = (theme: ThemeType) => ({
     color: 'blue',
   }),
 });
-const Footer = () => {
-  const theme = useTheme() as ThemeType;
-  const styles = footerStyles(theme);
-  return (
-    <footer css={styles.container}>
-      <div css={styles.snsIcons}>
-        <FaGithub css={styles.github} />
-        <FaInstagram css={styles.insta} />
-        <MdOutlineEmail css={styles.mail} />
-      </div>
-      <p css={styles.copyRight}>
-        © 2024 프로그래머스 데브코스 8조 2팀 All pictures cannot be copied
-        without permission.
-      </p>
-    </footer>
-  );
-}
 export default Footer;

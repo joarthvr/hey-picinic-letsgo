@@ -1,20 +1,76 @@
 import { css, useTheme } from '@emotion/react';
-import { Link, NavLink } from 'react-router-dom';
-import logo from '../../assets/icons/logo.svg';
-import { ThemeType } from '../../assets/styles/theme';
+import { Link } from 'react-router-dom';
+import Logo from '@/assets/icons/logo.svg?react';
+import { ThemeType } from '@/assets/styles/theme';
+// interface Condition {
+//   id: number;
+//   condition: string;
+//   locationInfo: string;
+// }
+const Header = () => {
+  const theme = useTheme() as ThemeType;
+  const styles = headerStyles(theme);
+
+  const navItems = [
+    {
+      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      title: '행사',
+      locationInfo: 'Festival',
+      condition: 15,
+    },
+    {
+      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      title: '숙박',
+      locationInfo: 'Lodgement',
+      condition: 32,
+    },
+    {
+      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      title: '관광지',
+      locationInfo: 'Attraction',
+      condition: 12,
+    },
+    { to: '/mypage', title: '마이페이지', condtion: 0 },
+  ];
+
+  return (
+    <header css={styles.container}>
+      <div css={styles.box}>
+        <Link to="/">
+          <Logo css={styles.logo} />
+        </Link>
+        <nav css={styles.nav}>
+          {navItems.map((item) => (
+            <Link
+              key={item.condition}
+              css={styles.link}
+              to={item.to}
+              state={{
+                locationInfo: item.locationInfo,
+                condition: item.condition,
+              }}
+            >
+              {item.title}
+            </Link>
+          ))}
+        </nav>
+      </div>
+    </header>
+  );
+};
 
 const headerStyles = (theme: ThemeType) => ({
   container: css({
-    padding: '1rem 5%',
+    padding: '1rem 3%',
     width: '100%',
     zIndex: 999,
     margin: 0,
     position: 'absolute',
     backgroundColor: 'transparent',
-    filter: theme.icons.headerLogo.filter,
   }),
   box: css({
     ...theme.interval.width,
+    padding:0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -36,32 +92,4 @@ const headerStyles = (theme: ThemeType) => ({
   }),
 });
 
-const Header = () => {
-  const theme = useTheme() as ThemeType;
-  const styles = headerStyles(theme);
-
-  return (
-    <header css={styles.container}>
-      <div css = {styles.box}>
-        <Link to="/">
-          <img css={styles.logo} src={logo} alt="header-logo" />
-        </Link>
-        <nav css={styles.nav}>
-          <NavLink css={styles.link} to="/festival">
-            행사
-          </NavLink>
-          <NavLink css={styles.link} to="/accommodation">
-            숙박
-          </NavLink>
-          <NavLink css={styles.link} to="/attractions">
-            관광지
-          </NavLink>
-          <NavLink css={styles.link} to="/mypage">
-            마이페이지
-          </NavLink>
-        </nav>
-      </div>
-    </header>
-  );
-};
 export default Header;

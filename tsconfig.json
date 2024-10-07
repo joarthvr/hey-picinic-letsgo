@@ -9,7 +9,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["vite-plugin-svgr/client"]
     // 다른 옵션들...
-  }
+  },
+  "include": ["svg.d.ts"]
 }
