@@ -7,7 +7,7 @@ import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 
 interface InputProps {
   placeHolder?: string;
-  condition?: number;
+  condition: number;
   locationInfo?: string;
   type?: string;
 }
@@ -58,7 +58,7 @@ const InputForSearch = ({
 
     // URL 업데이트
     navigate(
-      `/list?keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
+      `/list?contentType=${encodeURIComponent(condition)}&keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
       {
         state: {
           condition,
@@ -66,28 +66,8 @@ const InputForSearch = ({
         },
       }
     );
-
-    // fetchKeywordSearch(combinedKeyword);
   };
 
-  // const fetchKeywordSearch = async (keyword: string) => {
-  //   try {
-  //     setLoading(true);
-  //     const items = await getKeywordSearch({
-  //       numOfRows: 10,
-  //       pageNo: 1,
-  //       listYN: 'Y',
-  //       arrange: 'A',
-  //       keyword: keyword,
-  //       contentTypeId: condition ?? 15,
-  //     });
-  //     console.log(items);
-  //   } catch {
-  //     setError('데이터를 불러오는 데 실패했습니다.');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   return (
     <div css={styles.container}>
       <div css={styles.inputContainer}>

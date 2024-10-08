@@ -2,13 +2,11 @@ import Festival from '@/assets/images/festival.png';
 import Lodgement from '@/assets/images/lodgment.png';
 import Attraction from '@/assets/images/attraction.png';
 import { css, useTheme } from '@emotion/react';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { ThemeType } from '@/assets/styles/theme';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import InputForSearch from '@/components/common/InputForSearch';
 import ListItem from '@/components/listItem';
-// import { useQuery } from '@tanstack/react-query';
-// import axios from 'axios';
 import { useSearchData } from '@/api';
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
@@ -16,20 +14,17 @@ const backgroundImages: Record<LocatType, string> = {
   Lodgement,
   Attraction,
 };
-interface ContentInfo {
-  title: string;
-  image: string;
-}
-const contentMap: Record<number, ContentInfo> = {
-  15: { title: '행사', image: Festival },
-  32: { title: '숙박', image: Lodgement },
-  12: { title: '관광지', image: Attraction },
-};
+const contentMap = [
+  { contentType: 15, title: '행사', image: Festival },
+  { contentType: 32, title: '숙박', image: Lodgement },
+  { contentType: 12, title: '관광지', image: Attraction },
+];
 const ListBySearch = () => {
-  // const [] = useSearchData
   const [searchParams] = useSearchParams();
   const searchParamsCity = searchParams.get('city');
-  const searchParamsKeyword = searchParams.get('keyword');
+  const searchParamsKeyword = searchParams.get('keyword') || '';
+  const contentTypeId = searchParams.get('contentType') || 12;
+
   const theme = useTheme() as ThemeType;
   const location = useLocation();
   const locationInfo = location.state.locationInfo;
@@ -40,17 +35,28 @@ const ListBySearch = () => {
     () => ListPageStyles(theme, locationInfo),
     [theme, locationInfo]
   );
-  // const fetchSearchData = async (): Promise<Todo[]> => {
-  //   const { data } = await axios.get<Todo[]>();
-  //   return data;
-  // };
-  // const {data} = useQuery('get-searchData', fetchSearchData);
+  const page = 1;
+  const arrange = 'A'; // 예시 값, 정렬 방식
+  const list = 'Y';
+  const combinedKeyword = `${searchParamsCity}${searchParamsKeyword}`.trim();
+  // const cd = 12
+  const { data, isLoading, error } = useSearchData(
+    combinedKeyword,
+    page,
+    Number(contentTypeId), // 문자열을 숫자로 변환
+    arrange,
+    list
+  );
+  useEffect(() => {}, [searchParamsKeyword, contentTypeId, page, arrange]);
+
+  console.log(data);
+  if (error) return <div>에러 발생: {error.message}</div>;
 
   return (
     <>
       <section css={styles.section1}>
         <div css={styles.sec1TextBox}>
-          <h1 css={styles.h1}>{contentMap[condition].title}</h1>
+          <h1 css={styles.h1}>{contentMap[0].title}</h1>
           <p css={styles.h1Eng}>{locationInfo}</p>
         </div>
       </section>
@@ -68,7 +74,13 @@ const ListBySearch = () => {
           condition={condition}
           placeHolder={`${searchParamsCity} ${searchParamsKeyword}`}
         />
-        <ListItem />
+        {isLoading ? (
+          <div>로딩 중...</div>
+        ) : error ? (
+          <div>에러 발생: {error.message}</div>
+        ) : (
+          <ListItem />
+        )}
       </section>
     </>
   );
