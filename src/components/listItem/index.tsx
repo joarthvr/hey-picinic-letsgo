@@ -4,25 +4,30 @@ import { ThemeType } from '@/assets/styles/theme';
 import noImage from '@/assets/images/no-image.png';
 import ShowDetailBtn from '@/components/listItem/ShowDetailBtn';
 import HeartBtn from '@/components/listItem/HeartBtn';
-const ListItem = () => {
+interface ListItemProps {
+  h3: string;
+  h4: string;
+  h5: string;
+  img: string;
+}
+const ListItem = ({ h3, h4, h5, img }: ListItemProps) => {
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => ListItemStyles(theme), [theme]);
   return (
     <div css={styles.container}>
-      <figure>
-        <img src={noImage} alt="itemImage" />
+      <figure css={styles.imgContainer}>
+        <img css={styles.img} src={img ? img : noImage} alt="itemImage" />
         <figcaption hidden>디테일 이미지</figcaption>
       </figure>
       <section css={styles.contentContainer}>
         <div css={styles.infoAndBtncontainer}>
           <div css={styles.infoContainer}>
-            <h3 css={styles.h3}>서울뮤직페스티벌</h3>
-            <p css={styles.adress}>경기도 평택시 포승읍 평택항만길75</p>
-            <p css={styles.adress}>조천산조천산조천산</p>
+            <h3 css={styles.h3}>{h3}</h3>
+            <p css={styles.adress}>{h4}</p>
+            <p css={styles.adress}>{h5}</p>
           </div>
           <div css={styles.buttonContainer}>
             <HeartBtn />
-            <ShowDetailBtn title="상세 정보" />
             <ShowDetailBtn title="상세 정보" />
           </div>
         </div>
@@ -45,6 +50,7 @@ const ListItemStyles = (theme: ThemeType) => ({
     fontFamily: 'Pretendard',
     gap: '2.65rem',
     position: 'relative',
+    marginBottom: '1rem',
     // border: '1px solid black',
   }),
   contentContainer: css({
@@ -77,7 +83,20 @@ const ListItemStyles = (theme: ThemeType) => ({
   description: {
     ...theme.fonts.description,
     color: theme.colors.TEXT_LIGHTGRAY,
-    // whiteSpace:'nowrap',
+  },
+  imgContainer: {
+    position: 'relative' as const,
+    width: '16.33363rem',
+    height: '10.76181rem',
+    flexShrink: 0,
+    borderRadius: '1rem',
+  },
+  img: {
+    position: 'absolute' as const,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover' as const,
+    borderRadius: '1rem',
   },
 });
 export default ListItem;

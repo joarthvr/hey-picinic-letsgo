@@ -48,10 +48,8 @@ const ListBySearch = () => {
     list
   );
   useEffect(() => {}, [searchParamsKeyword, contentTypeId, page, arrange]);
-
-  console.log(data);
-  if (error) return <div>에러 발생: {error.message}</div>;
-
+  const searchResult = data?.item;
+  console.log(searchResult);
   return (
     <>
       <section css={styles.section1}>
@@ -74,13 +72,15 @@ const ListBySearch = () => {
           condition={condition}
           placeHolder={`${searchParamsCity} ${searchParamsKeyword}`}
         />
-        {isLoading ? (
-          <div>로딩 중...</div>
-        ) : error ? (
-          <div>에러 발생: {error.message}</div>
-        ) : (
-          <ListItem />
-        )}
+        {searchResult?.map((item) => (
+          <ListItem
+            key={item.contentid || '없음'}
+            h3={item.title || '없음'}
+            h4={item.addr1 || '없음'}
+            h5={item.addr2 || '없음'}
+            img={item.firstimage || ''}
+          />
+        ))}
       </section>
     </>
   );
