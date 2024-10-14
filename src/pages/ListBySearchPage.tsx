@@ -7,7 +7,8 @@ import { ThemeType } from '@/assets/styles/theme';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import InputForSearch from '@/components/common/InputForSearch';
 import ListItem from '@/components/listItem';
-import { useSearchData } from '@/api';
+import { useInfiniteSearch } from '@/api';
+import { useInView } from 'react-intersection-observer';
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
   Festival,
@@ -19,18 +20,17 @@ const contentMap = [
   { contentType: 32, title: '숙박', image: Lodgement },
   { contentType: 12, title: '관광지', image: Attraction },
 ];
-const ListBySearch = () => {
+
+const ListBySearchPage = () => {
   const [searchParams] = useSearchParams();
   const searchParamsCity = searchParams.get('city');
   const searchParamsKeyword = searchParams.get('keyword') || '';
   const contentTypeId = searchParams.get('contentType') || 12;
-
   const theme = useTheme() as ThemeType;
   const location = useLocation();
   const locationInfo = location.state.locationInfo;
   const condition = location.state.condition;
   console.log(location);
-  console.log(locationInfo);
   const styles = useMemo(
     () => ListPageStyles(theme, locationInfo),
     [theme, locationInfo]
@@ -39,17 +39,31 @@ const ListBySearch = () => {
   const arrange = 'A'; // 예시 값, 정렬 방식
   const list = 'Y';
   const combinedKeyword = `${searchParamsCity}${searchParamsKeyword}`.trim();
-  // const cd = 12
-  const { data, isLoading, error } = useSearchData(
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+    isError,
+    isLoading,
+  } = useInfiniteSearch(
     combinedKeyword,
     page,
     Number(contentTypeId), // 문자열을 숫자로 변환
     arrange,
     list
   );
-  useEffect(() => {}, [searchParamsKeyword, contentTypeId, page, arrange]);
-  const searchResult = data?.item;
-  console.log(searchResult);
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+  });
+  useEffect(() => {
+    if (hasNextPage && !isFetching) fetchNextPage();
+    return undefined;
+  }, [searchParamsKeyword, searchParamsCity, contentTypeId, page, inView]);
+  const searchResult = data?.pages.flatMap((page) => page.items.item);
   return (
     <>
       <section css={styles.section1}>
@@ -74,14 +88,15 @@ const ListBySearch = () => {
         />
         {searchResult?.map((item) => (
           <ListItem
-            key={item.contentid || '없음'}
-            h3={item.title || '없음'}
-            h4={item.addr1 || '없음'}
-            h5={item.addr2 || '없음'}
-            img={item.firstimage || ''}
+            key={item?.contentid || '없음'}
+            h3={item?.title || '없음'}
+            h4={item?.addr1 || '없음'}
+            h5={item?.addr2 || '없음'}
+            img={item?.firstimage || ''}
           />
         ))}
       </section>
+      <div ref={ref}>렌더 중{inView}</div>
     </>
   );
 };
@@ -120,4 +135,4 @@ const ListPageStyles = (theme: ThemeType, locationInfo: LocatType) => ({
     fontWeight: 600,
   }),
 });
-export default ListBySearch;
+export default ListBySearchPage;

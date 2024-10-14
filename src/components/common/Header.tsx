@@ -2,35 +2,31 @@ import { css, useTheme } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import Logo from '@/assets/icons/logo.svg?react';
 import { ThemeType } from '@/assets/styles/theme';
-// interface Condition {
-//   id: number;
-//   condition: string;
-//   locationInfo: string;
-// }
+
 const Header = () => {
   const theme = useTheme() as ThemeType;
   const styles = headerStyles(theme);
 
   const navItems = [
     {
-      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      to: `/list?contentType=15&keyword=&city=${encodeURIComponent('서울')}`,
       title: '행사',
       locationInfo: 'Festival',
       condition: 15,
     },
     {
-      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      to: `/list?contentType=32&keyword=&city=${encodeURIComponent('서울')}`,
       title: '숙박',
       locationInfo: 'Lodgement',
       condition: 32,
     },
     {
-      to: `/list?keyword=${encodeURIComponent('')}&city=${encodeURIComponent('')}`,
+      to: `/list?contentType=12&keyword=&city=${encodeURIComponent('서울')}`,
       title: '관광지',
       locationInfo: 'Attraction',
       condition: 12,
     },
-    { to: '/mypage', title: '마이페이지', condtion: 0 },
+    { to: '/mypage', title: '마이페이지', condition: 0 },
   ];
 
   return (
@@ -58,6 +54,7 @@ const Header = () => {
     </header>
   );
 };
+
 
 const headerStyles = (theme: ThemeType) => ({
   container: css({

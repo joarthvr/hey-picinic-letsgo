@@ -38,7 +38,7 @@ export const getKeywordSearchData = async (
         response.data.response.header.resultMsg || 'API 호출 실패'
       );
     }
-    return response.data.response.body.items;
+    return response.data.response.body;
   } catch (error) {
     console.error('API 호출 중 오류 발생:', error);
     throw error;

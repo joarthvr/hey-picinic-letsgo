@@ -1,19 +1,23 @@
-import { useQuery } from '@tanstack/react-query';
-// import { useState, useEffect } from 'react';
-// import { useSearchParams } from 'react-router-dom';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 import { getKeywordSearchData } from '@/api';
-// import { SearchData } from '@/api/api.dto';
 
-export const useSearchData = (
+export const useInfiniteSearch = (
   keyword: string,
   page: number,
   contentTypeId: number,
   arrange: string,
   list: string
 ) =>
-  useQuery({
-    queryKey: ['/searchKeyword1', keyword, page, contentTypeId, arrange, list],
+  useInfiniteQuery({
+    queryKey: ['searchKeywordInfinite'],
     queryFn: () =>
       getKeywordSearchData(page, keyword, contentTypeId, arrange, list),
-    enabled: !!keyword && !!contentTypeId,
+    getNextPageParam: (lastPage, pages) => {
+      const totalPage = Math.ceil(lastPage.totalCount / 10);
+      console.log(pages);
+      return lastPage.pageNo < totalPage
+        ? (page = lastPage.pageNo + 1)
+        : undefined;
+    },
+    initialPageParam: 1,
   });

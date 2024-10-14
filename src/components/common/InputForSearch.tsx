@@ -3,7 +3,7 @@ import { css, useTheme } from '@emotion/react';
 import { ThemeType } from '@/assets/styles/theme';
 import data from '@/models/data.json';
 // import { getKeywordSearch } from '@/api/api';
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation} from 'react-router-dom';
 
 interface InputProps {
   placeHolder?: string;
@@ -17,15 +17,11 @@ const InputForSearch = ({
   locationInfo,
   type = 'list',
 }: InputProps) => {
-  const [searchParams] = useSearchParams();
-  console.log(searchParams.get('list'));
   const navigate = useNavigate();
   const location = useLocation();
   const theme = useTheme() as ThemeType;
   const styles = useMemo(() => inputStyles(theme, type), [theme, type]);
   const [inputValue, setInputValue] = useState('');
-  // const [, setLoading] = useState(true);
-  // const [, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState(
     data.citiesForSearch[0].city
   );
@@ -54,8 +50,6 @@ const InputForSearch = ({
   }, [location.search]);
 
   const handleSearch = () => {
-    const combinedKeyword = `${selectedCity}${inputValue}`.trim();
-
     // URL 업데이트
     navigate(
       `/list?contentType=${encodeURIComponent(condition)}&keyword=${encodeURIComponent(inputValue)}&city=${encodeURIComponent(selectedCity)}`,
