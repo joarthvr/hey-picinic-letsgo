@@ -1,11 +1,12 @@
 import { css, useTheme } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Logo from '@/assets/icons/logo.svg?react';
 import { ThemeType } from '@/assets/styles/theme';
 
 const Header = () => {
   const theme = useTheme() as ThemeType;
-  const styles = headerStyles(theme);
+  const location = useLocation();
+  const styles = headerStyles(theme, location);
 
   const navItems = [
     {
@@ -55,10 +56,9 @@ const Header = () => {
   );
 };
 
-
-const headerStyles = (theme: ThemeType) => ({
+const headerStyles = (theme: ThemeType, location: { pathname: string }) => ({
   container: css({
-    padding: '1rem 3%',
+    padding: '1rem 2%',
     width: '100%',
     zIndex: 999,
     margin: 0,
@@ -67,13 +67,14 @@ const headerStyles = (theme: ThemeType) => ({
   }),
   box: css({
     ...theme.interval.width,
-    padding:0,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
   }),
   logo: css({
-    ...theme.icons.headerLogo,
+    ...(location.pathname === '/' || location.pathname.includes('/list')
+      ? theme.icons.headerWhiteLogo
+      : theme.icons.defaultLogo),
   }),
   nav: css({
     display: 'flex',
@@ -81,7 +82,10 @@ const headerStyles = (theme: ThemeType) => ({
     ...theme.fonts.header,
   }),
   link: css({
-    color: '#fff',
+    color:
+      location.pathname === '/' || location.pathname.includes('/list')
+        ? '#fff'
+        : '#000000',
     textDecoration: 'none',
     '&:hover': {
       textDecoration: 'underline',

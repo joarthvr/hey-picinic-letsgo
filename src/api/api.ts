@@ -4,7 +4,7 @@ import { GetKeywordSearchDataDTO } from '@/api/api.dto';
 const API_URL = import.meta.env.VITE_APP_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_SERVICE_KEY;
 
-const commonParams = (page: number) => ({
+const commonParams = (page: number = 1) => ({
   serviceKey: API_KEY,
   numOfRows: 10,
   pageNo: page,
@@ -16,9 +16,9 @@ const commonParams = (page: number) => ({
 export const getKeywordSearchData = async (
   page: number,
   keyword: string,
-  contentTypeId: number,
-  arrange: string,
-  list: string
+  contentTypeId: number = 12,
+  arrange: string = 'A',
+  list: string = 'Y'
 ) => {
   try {
     const response = await axios.get<GetKeywordSearchDataDTO>(

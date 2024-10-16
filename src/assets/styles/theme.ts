@@ -76,15 +76,26 @@ export const theme = {
       fontWeight: 400,
       lineHeight: 'normal',
     },
+    black: {
+      color: '#000',
+      fontSize: '0.875rem',
+      fontWeight: 600,
+    },
   },
   icons: {
-    headerLogo: {
+    headerWhiteLogo: {
       width: '4.1875rem',
       height: '1.8125rem',
       flexShrink: 0,
       filter: 'brightness(0) invert(1)', // 흰색 필터 추가
       fill: '#fff',
     },
+    defaultLogo: {
+      width: '4.1875rem',
+      height: '1.8125rem',
+      flexShrink: 0,
+    },
+
     footerInsta: {},
   },
   interval: {
@@ -95,7 +106,7 @@ export const theme = {
       paddingTop: '6.13rem',
     },
     width: {
-      maxWidth: '1220px',
+      maxWidth: '1240px',
       padding: '0 1rem 0 1rem',
       margin: 'auto',
     },

@@ -28,7 +28,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    console.log(selectedCondition);
   }, [selectedCondition]);
   return (
     <>

@@ -3,7 +3,7 @@ import MainLayout from '@/layout/MainLayout';
 import HomePage from '@/pages/HomePage';
 import ListPage from '@/pages/ListBySearchPage';
 import MyPage from '@/pages/MyPage';
-import Detail from '@/pages/Detail';
+import Detail from '@/pages/DetailPage';
 import ErrorPage from '@/pages/ErrorPage';
 const router = createBrowserRouter([
   {
@@ -19,20 +19,12 @@ const router = createBrowserRouter([
         path: 'list',
         element: <ListPage />,
       },
-      // {
-      //   path: 'accommodation',
-      //   element: <ListPage />,
-      // },
-      // {
-      //   path: 'attractions',
-      //   element: <ListPage />,
-      // },
       {
         path: 'mypage',
         element: <MyPage />,
       },
       {
-        path: 'detail/:id',
+        path: 'detail',
         element: <Detail />,
       },
     ],

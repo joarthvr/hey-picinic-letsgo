@@ -2,73 +2,80 @@ import Festival from '@/assets/images/festival.png';
 import Lodgement from '@/assets/images/lodgment.png';
 import Attraction from '@/assets/images/attraction.png';
 import { css, useTheme } from '@emotion/react';
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import { ThemeType } from '@/assets/styles/theme';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import InputForSearch from '@/components/common/InputForSearch';
 import ListItem from '@/components/listItem';
 import { useInfiniteSearch } from '@/api';
 import { useInView } from 'react-intersection-observer';
+import { useQueryClient } from '@tanstack/react-query';
 type LocatType = 'Festival' | 'Lodgement' | 'Attraction';
 const backgroundImages: Record<LocatType, string> = {
   Festival,
   Lodgement,
   Attraction,
 };
-const contentMap = [
-  { contentType: 15, title: '행사', image: Festival },
-  { contentType: 32, title: '숙박', image: Lodgement },
-  { contentType: 12, title: '관광지', image: Attraction },
-];
 
 const ListBySearchPage = () => {
   const [searchParams] = useSearchParams();
-  const searchParamsCity = searchParams.get('city');
+  const searchParamsCity = searchParams.get('city') || '서울';
   const searchParamsKeyword = searchParams.get('keyword') || '';
   const contentTypeId = searchParams.get('contentType') || 12;
   const theme = useTheme() as ThemeType;
   const location = useLocation();
   const locationInfo = location.state.locationInfo;
   const condition = location.state.condition;
-  console.log(location);
+  const queryClient = useQueryClient();
   const styles = useMemo(
     () => ListPageStyles(theme, locationInfo),
     [theme, locationInfo]
   );
-  const page = 1;
-  const arrange = 'A'; // 예시 값, 정렬 방식
-  const list = 'Y';
-  const combinedKeyword = `${searchParamsCity}${searchParamsKeyword}`.trim();
+  const combinedKeyword = useMemo(
+    () => `${searchParamsCity}${searchParamsKeyword}`.trim(),
+    [searchParamsCity, searchParamsKeyword]
+  );
+  const queryKey: [string, string, number] = useMemo(
+    () => ['searchKeywordInfinite', combinedKeyword, Number(contentTypeId)],
+    [combinedKeyword, contentTypeId]
+  );
   const {
     data,
-    error,
     fetchNextPage,
     hasNextPage,
     isFetching,
     isFetchingNextPage,
-    status,
-    isError,
-    isLoading,
+    refetch,
   } = useInfiniteSearch(
+    queryKey,
     combinedKeyword,
-    page,
-    Number(contentTypeId), // 문자열을 숫자로 변환
-    arrange,
-    list
+    Number(contentTypeId) // 문자열을 숫자로 변환
   );
+
   const { ref, inView } = useInView({
-    threshold: 0.5,
+    threshold: 0.9,
   });
+
+  const resetAndRefetch = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: queryKey });
+    refetch();
+  }, [queryClient, queryKey, refetch]);
+
   useEffect(() => {
-    if (hasNextPage && !isFetching) fetchNextPage();
-    return undefined;
-  }, [searchParamsKeyword, searchParamsCity, contentTypeId, page, inView]);
+    resetAndRefetch();
+  }, [combinedKeyword, contentTypeId, resetAndRefetch]);
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetching, fetchNextPage]);
   const searchResult = data?.pages.flatMap((page) => page.items.item);
   return (
     <>
       <section css={styles.section1}>
         <div css={styles.sec1TextBox}>
-          <h1 css={styles.h1}>{contentMap[0].title}</h1>
+          <h1 css={styles.h1}>{locationInfo}</h1>
           <p css={styles.h1Eng}>{locationInfo}</p>
         </div>
       </section>
@@ -96,7 +103,13 @@ const ListBySearchPage = () => {
           />
         ))}
       </section>
-      <div ref={ref}>렌더 중{inView}</div>
+      <div ref={ref}>
+        {isFetchingNextPage
+          ? '로딩 중...'
+          : hasNextPage
+            ? '더 보기'
+            : '모든 결과를 불러왔습니다.'}
+      </div>
     </>
   );
 };
